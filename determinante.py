@@ -7,23 +7,24 @@ Created on Tue Aug 20 20:15:39 2019
 
 def determinante(matriz):
     global c
+    comp=False
     c = c+1
     for i in range(len(matriz)-1): 
-        c=c+4
+        c=c+6
         for j in range(i+1, len(matriz)):
-            c=c+4
+            c=c+6
             for k in range (i+1, len(matriz)):
-                c=c+5
+                c=c+3
                 try:
                     matriz[j][k] = float(matriz[j][k]-((matriz[j][i]*matriz[i][k])/matriz[i][i]))
                 except ZeroDivisionError:
                     aux=matriz[i]
                     matriz[i]=matriz[i+1]
                     matriz[i+1]=aux
-                    c+=10
+                    #c+=10
                     comp=True
                     matriz[j][k] = float(matriz[j][k]-((matriz[j][i]*matriz[i][k])/matriz[i][i]))
-                c+=11
+                c+=14
     c+=1                
     det=1
     for i in range(len(matriz)):
@@ -62,5 +63,7 @@ for i in range (len(matriz)):
         tot=tot+str(matriz[i][j])+" "
     print(tot)
 
+
 print("")         
 print("El determinante de la matriz es: "+str(determinante(matriz))+" y el numero de operaciones es: "+str(c))
+print("El resultado de la ecuación es: "+str((n*(n-2)-(n-2)-(((n-2)*(n-1))/2))*5 + 6*(n-1)+3))
