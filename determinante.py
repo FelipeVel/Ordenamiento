@@ -7,10 +7,10 @@ Created on Tue Aug 20 20:15:39 2019
 
 def determinante(matriz):
     global c
-    comp=False
+    cambio=1    
     c = c+1
     for i in range(len(matriz)-1): 
-        c=c+6
+        c=c+7
         for j in range(i+1, len(matriz)):
             c=c+6
             for k in range (i+1, len(matriz)):
@@ -18,14 +18,25 @@ def determinante(matriz):
                 try:
                     matriz[j][k] = float(matriz[j][k]-((matriz[j][i]*matriz[i][k])/matriz[i][i]))
                 except ZeroDivisionError:
-                    aux=matriz[i]
-                    matriz[i]=matriz[i+1]
-                    matriz[i+1]=aux
-                    #c+=10
-                    comp=True
-                    matriz[j][k] = float(matriz[j][k]-((matriz[j][i]*matriz[i][k])/matriz[i][i]))
+                    for m in range(j, len(matriz[j])):
+                        if matriz[m][i]!=0:
+                            aux=matriz[i]      
+                            matriz[i]=matriz[m]
+                            matriz[m]=aux
+                            cambio*=-1
+                            break
+                    try:
+                        matriz[j][k] = float(matriz[j][k]-((matriz[j][i]*matriz[i][k])/matriz[i][i]))        
+                    except ZeroDivisionError:
+                        for i in range (len(matriz)):
+                            tot=""
+                            for j in range (len(matriz)):
+                                tot=tot+str(matriz[i][j])+" "
+                            print(tot)
+                        return "No se puede calcular el determinante por gauss"    
+                    
                 c+=14
-    c+=1                
+    c+=1   
     det=1
     for i in range(len(matriz)):
         det=det*matriz[i][i]
@@ -34,9 +45,7 @@ def determinante(matriz):
         for j in range (len(matriz)):
             tot=tot+str(matriz[i][j])+" "
         print(tot)
-    if comp:
-        det=det*(-1)
-    return det
+    return det*cambio
                 
 n = int(input("Digite n: "))
 c=0
@@ -66,4 +75,3 @@ for i in range (len(matriz)):
 
 print("")         
 print("El determinante de la matriz es: "+str(determinante(matriz))+" y el numero de operaciones es: "+str(c))
-print("El resultado de la ecuación es: "+str((n*(n-2)-(n-2)-(((n-2)*(n-1))/2))*5 + 6*(n-1)+3))
